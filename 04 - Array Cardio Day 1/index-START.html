@@ -38,29 +38,116 @@
     
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
-
+    const fifteen = inventors.filter((item) => item.year < 1600 && item.year >= 1500);
+    console.log("Filtered for those born in the 1500's");
+    console.table(fifteen);
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
-
+    const fullNames = inventors.map((inventor) => inventor.first + " " + inventor.last);
+    console.log("Mapped to get full names of inventors");
+    console.log(fullNames);
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
 
+    /*const sortedByBirthdate = inventors.sort(function(a,b) {
+      if (a.year > b.year) return 1;
+      if (a.year == b.year) return 0;
+      if (a.year < b.year) return -1;
+    });*/
+
+    const sortedByBirthdate = inventors.sort((a,b) => a.year > b.year ? 1 : -1);
+    console.log("Sorted by Birth Year");
+    console.table(sortedByBirthdate);
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
 
+    const totalYears = inventors.reduce((total, inventor) => {
+      return total + (inventor.passed - inventor.year);
+    }, 0);
+
+    console.log("Total number of years lived");
+    console.log(totalYears);
+
     // 5. Sort the inventors by years lived
+
+    /*const sortedByLifetime = inventors.sort(function(a,b) {
+      if (a.passed - a.year > b.passed - a.year) return 1;
+      if (a.passed - a.year == b.passed - a.year) return 0;
+      if (a.passed - a.year < b.passed - a.year) return -1;
+    })*/
+  const sortedByLifetime = inventors.sort((a,b) => a.passed - a.year > b.passed - b.year ? 1 : -1);
+
+  const oldest = inventors.sort((a,b) => {
+    const lastGuy = a.passed - a.year;
+    const thisGuy = b.passed - a.year;
+    return lastGuy > thisGuy ? -1 : 1;
+  })
+
+  console.log("Sorted by Length of Life");
+  console.table(sortedByLifetime);
+  console.table(oldest);
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
 
+    // paste into the dev console on the above site and call de for the list
+  /*const category = document.querySelector('.mw-category');
+  const links = Array.from(category.querySelectorAll('a'));
+
+  const de = links
+    .map(link => link.textContent)
+    .filter(streetName => streetName.includes('de' || "d'"));*/
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
 
+    /*const sortedByLastName = inventors.sort(function(a,b) {
+      if (a.last > b.last) return 1;
+      if (a.last == b.last) return 0;
+      if (a.last < b.last) return -1;
+    });*/
+  const alpha = people.sort((lastOne, nextOne) => {
+      const [alast, afirst] = lastOne.split(', ');
+      const [blast, bfirst] = nextOne.split(', ');
+      return alast > blast ? -1 : 1;
+  });
+  console.log(alpha);
+
     // 8. Reduce Exercise
     // Sum up the instances of each of these
+
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
 
+    const reducedData = data.reduce((object, item) => {
+      // if the object[item] doesn't exist, set it to 0
+      if (!object[item]) {
+        object[item]=0;
+      }
+      //if object[item] exists, increment it
+      object[item]++;
+      return object;
+    }, {});
+
+    console.log(reducedData);
+
+    function fibonacci(number) {
+    // create fibonacci sequence
+    // start with 1, 1
+    const sequence = [1,1];
+        
+    //create next number
+        // next number is the sum of previous two numbers
+        for (let i=0; i<number; i++) {
+            const newNumber = sequence.at(-1) + sequence.at(-2);
+            // add number to the sequence
+            sequence.push(newNumber);
+        };
+        
+    // find given number's value in the sequence
+    console.log(sequence);
+    return sequence[number];
+    }
+    fibonacci(3)
   </script>
 </body>
 </html>
